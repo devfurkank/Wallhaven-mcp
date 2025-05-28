@@ -1,0 +1,22 @@
+# Smithery configuration file: https://smithery.ai/docs/build/project-config
+
+startCommand:
+  type: stdio
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    type: object
+    properties:
+      wallhavenApiKey:
+        type: string
+        description: "Wallhaven API key. Required for accessing NSFW content and user-specific features. Get your API key from https://wallhaven.cc/settings/account"
+    additionalProperties: false
+  commandFunction: |
+    (config) => ({
+      command: 'python',
+      args: ['-m', 'server'],
+      env: {
+        WALLHAVEN_API_KEY: config.wallhavenApiKey || ''
+      }
+    })
+  exampleConfig:
+    wallhavenApiKey: "your-wallhaven-api-key"
